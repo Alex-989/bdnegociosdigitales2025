@@ -53,7 +53,7 @@ create table producto1(
   productoid int not null,
   nombreProducto varchar(20) not null,
   descripcion varchar(80) null,
-  precio decimal(10,2) not null,
+  precio money not null,
   existencia int not null,
   categoriaid int null,
   constraint pk_producto1
@@ -84,23 +84,14 @@ where categoriaid=5;
 select * from categoria;
 
 
-create table cliente(
-clienteid int not null auto_increment,
-codigocliente varchar(15) not null,
-nombre varchar(30) not null,
-direccion varchar(100) not null,
-telefono varchar(19),
-constraint pk_cliente
-primary key(clienteid),
-constraint unico_codigocliente
-unique (codigocliente)
+aue (codigocliente)
 );
 
 
 CREATE TABLE detalleorden(
 ordenfk int not null,
 productofk int not null,
-preciocompra decimal(10,2) not null,
+preciocompra money not null,
 cantidad int not null,
 constraint pk_detalleorden
 primary key(ordenfk,productofk),
@@ -112,21 +103,6 @@ constraint fk_detalleorden_producto
 foreign key(productofk)
 references producto1(productoid)
 );
-
-
-
-CREATE TABLE ordencompra (
-ordenid int not null auto_increment,
-fechacompra date not null,
-cliente int not null,
-constraint pk_ordencompra
-primary key(ordenid),
-constraint fk_ordencompra_cliente
-foreign key (cliente)
-references cliente(clienteid)
-);
-
-
 
 ALTER TABLE detalleorden
 add constraint fk_detalleorden_ordencompra

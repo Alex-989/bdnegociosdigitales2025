@@ -6,4 +6,4 @@
 3. Manejo de transacciones.
 4. Base de Datos NoSQL(MonoDB).
 
-![Base de Datos](./Images/Romeo.jpg)
+![Base de Datos](/Images/Romeo.jpg)
