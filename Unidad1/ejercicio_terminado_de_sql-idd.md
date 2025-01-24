@@ -1,3 +1,7 @@
+# Ejercicio de Creacion de Base de datos SQL-LDD
+
+```sql
+
 # creacion de la base de datos
 
 # crea la base de datos
@@ -132,3 +136,6 @@ ALTER TABLE detalleorden
 add constraint fk_detalleorden_ordencompra
 foreign key (ordenfk)
 references ordencompra(ordenid)
+```
+## Diagrama Resultante
+![Diagrama Resultante](/Unidad1/Images/Diagrama1_Tienda.jpg)
