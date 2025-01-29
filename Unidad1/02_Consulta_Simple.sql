@@ -119,3 +119,67 @@ ShippedDate,
 CustomerID
 from Orders
 where year(OrderDate) = '1986';
+
+
+
+-- Mostrar los paises en donde se tienen clientes, mostrando
+-- pais solamente
+
+select distinct Country from Customers
+order by country;
+
+
+-- Mostrar todas las ordenes de compra donde la cantidad de 
+--productos comprados sea mayor a 5.
+
+select OrderID, Quantity from [Order Details]
+where Quantity >= 40;
+
+
+-- Mostrar el nombre completo del empleado, su numero de 
+-- empleado, fecha de nacimiento, ciudad y fecha de contratacion
+-- y esta debe ser de aquellos que fueron contratados despues de
+-- 1993.
+-- Los resultados en sus encabezados deben ser mostrados en
+-- español.
+select 
+FirstName as Nombre,
+LastName as Apellido, 
+EmployeeID as [Numero de empleado], 
+BirthDate as [Fecha de nacimiento],
+City as Ciudad, 
+HireDate as [Fecha de contratacion] 
+from Employees
+where year(HireDate)>1993;
+
+
+-- Concatenacion
+select 
+(FirstName +  '  '  + LastName) as [Nombre completo] , 
+EmployeeID as [Numero de empleado], 
+BirthDate as [Fecha de nacimiento],
+City as Ciudad, 
+HireDate as [Fecha de contratacion] 
+from Employees
+where year(HireDate)>1993;
+
+-- Segunda forma.
+select 
+concat(FirstName,   '',  + LastName, '  ' ) as [Nombre completo] , 
+EmployeeID as [Numero de empleado], 
+BirthDate as [Fecha de nacimiento],
+City as Ciudad, 
+HireDate as [Fecha de contratacion] 
+from Employees
+where year(HireDate)>1993;
+
+
+
+-- Mostrar los empleados que no son dirigidos por el jefe 2.
+select * from Employees
+
+select EmployeeID, ReportsTo from Employees
+where ReportsTo is null
+
+select EmployeeID, ReportsTo from Employees
+where ReportsTo != 2
