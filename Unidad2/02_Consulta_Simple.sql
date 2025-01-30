@@ -268,6 +268,8 @@ select OrderID, ShipCountry, Freight from Orders
 where (ShipCountry = 'France' or ShipCountry = 'Germany') and Freight < 50
 
 
+
+-- Resolver
 -- Seleccionar pedidos con un flete mayor a $100,
 -- enviados a Brasil o Argentina,
 -- pero no enviados por el transportista 1
@@ -293,3 +295,28 @@ from Employees
 where City <> 'London' and City <> 'Seattle' and year(HireDate) >= 1992
 
 
+
+-- Clausula IN (or)
+--Seleccionar los productos con categora de 1, 3 0 5
+select ProductName, CategoryID, UnitPrice from Products
+where CategoryID = 1 or CategoryID = 3 or CategoryID = 5
+
+select ProductName, CategoryID, UnitPrice from Products
+where CategoryID in (1,3,5)
+
+
+-- Seleccionar todas las ordenes de la region RJ, Tachira y que
+-- no tengan region asignada
+select OrderID, ShipRegion from Orders
+where ShipRegion in ('RJ','Táchira') or ShipRegion is null
+
+
+-- Seleccionar lar ordenes que tengan cantidades de 12, 9 o 40
+-- y descuento de 0.15 o 0.05.
+select * from [Order Details]
+
+select * from [Order Details]
+where Quantity in (12, 9, 40) and Discount in (0.15, 0.05)
+
+
+-- Clausula Between
