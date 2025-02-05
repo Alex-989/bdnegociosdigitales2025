@@ -429,3 +429,76 @@ WHERE CompanyName LIKE '%CO%'
 -- caracteres
 SELECT FirstName, LastName FROM Employees
 WHERE FirstName LIKE 'A_____'
+
+
+
+-- Seleccionar los productos que comiencen con A o B
+SELECT * FROM Products
+where ProductName like '[ABC]%'
+
+-- Rango de A hacia M
+SELECT * FROM Products
+where ProductName like '[A-M]%'
+
+
+-- Seleccionar todos los productos que no comiencen con A o B
+SELECT * FROM Products
+where ProductName like '[^AB]%'
+
+
+-- Seleccionar todos los productos donde el nombre comience con A pero que no
+-- contenga la E.
+SELECT * FROM Products
+WHERE ProductName LIKE 'A[^E]%'
+
+
+
+-- Clausula Order by (Acendente)
+SELECT ProductID, ProductName, UnitPrice, UnitsInStock 
+FROM Products
+ORDER BY UnitPrice ASC
+
+
+-- Descendente
+SELECT ProductID, ProductName, UnitPrice, UnitsInStock 
+FROM Products
+ORDER BY UnitPrice DESC
+
+
+SELECT ProductID, ProductName, UnitPrice, UnitsInStock 
+FROM Products
+ORDER BY 3 DESC
+
+
+SELECT ProductID, ProductName, UnitPrice AS 'Precio', UnitsInStock 
+FROM Products
+ORDER BY 'Precio' DESC
+
+
+-- Seleccionar los clientes ordenados por el pais y dentro por ciudad
+SELECT * FROM Customers
+
+SELECT CustomerID, Country, City FROM Customers
+ORDER BY Country ASC, City ASC
+
+
+SELECT CustomerID, Country, City FROM Customers
+ORDER BY Country ASC, City DESC
+
+
+SELECT CustomerID, Country, City 
+FROM Customers
+WHERE Country IN ('Brazil')
+ORDER BY Country ASC, City DESC
+
+SELECT CustomerID, Country, City 
+FROM Customers
+WHERE Country IN ('Brazil', 'Germany')
+ORDER BY Country ASC, City DESC
+
+
+SELECT CustomerID, Country, City 
+FROM Customers
+WHERE (Country = 'Brazil' OR Country = 'Germany')
+AND region is NOT NULL
+ORDER BY Country ASC, City DESC
