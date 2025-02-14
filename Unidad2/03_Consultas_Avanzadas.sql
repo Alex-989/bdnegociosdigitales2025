@@ -256,3 +256,142 @@ ON O.EmployeeID = E.EmployeeID
 INNER JOIN [Order Details] AS OD
 ON OD.OrderID = O.OrderID
 GROUP BY E.FirstName, E.LastName
+
+
+-- 11. Listar los clientes y la cantidad de pedidos que han realizado.
+SELECT * FROM Orders -- = 830
+SELECT * FROM Customers -- = 91
+
+SELECT CUS.CompanyName,COUNT(*) AS 'Pedidos realizados'
+FROM
+Orders AS ORD
+INNER JOIN Customers AS CUS
+ON ORD.CustomerID = CUS.CustomerID
+GROUP BY CUS.CompanyName
+ORDER BY 'Pedidos realizados' 
+
+SELECT CUS.CompanyName,COUNT(*) AS 'Pedidos realizados'
+FROM
+Orders AS ORD
+INNER JOIN Customers AS CUS
+ON ORD.CustomerID = CUS.CustomerID
+GROUP BY CUS.CompanyName
+ORDER BY 2 
+
+SELECT CUS.CompanyName,COUNT(*) AS 'Pedidos realizados'
+FROM
+Orders AS ORD
+INNER JOIN Customers AS CUS
+ON ORD.CustomerID = CUS.CustomerID
+GROUP BY CUS.CompanyName
+ORDER BY COUNT(*)
+
+-- 12. Obtener los empldeados que han gestionado pedidos enviados a alemania.
+SELECT * FROM Employees
+SELECT * FROM Orders
+
+SELECT EM.EmployeeID, CONCAT(EM.FirstName, ' ', EM.LastName) AS 'Nombre', ShipCountry 
+FROM
+Orders AS ORD
+INNER JOIN Employees EM
+ON ORD.EmployeeID = EM.EmployeeID
+WHERE ShipCountry = 'Germany'
+
+SELECT DISTINCT EM.EmployeeID, CONCAT(EM.FirstName, ' ', EM.LastName) AS 'Nombre', ShipCountry 
+FROM
+Orders AS ORD
+INNER JOIN Employees EM
+ON ORD.EmployeeID = EM.EmployeeID
+WHERE ShipCountry = 'Germany'
+
+-- 13. Listar los productos junto con el nombre del proveedor y el pais de origen
+SELECT * FROM Products
+SELECT * FROM Suppliers
+SELECT * FROM Orders
+
+SELECT ProductID, ProductName, SUP.SupplierID, SUP.Country
+FROM
+Products AS PRO
+INNER JOIN Suppliers AS SUP
+ON PRO.SupplierID = SUP.SupplierID
+
+-- 14. Obtener los pedidos agrupados por pais de envio.
+SELECT * FROM Orders
+SELECT * FROM Shippers
+
+SELECT OrderID, ShipCountry
+FROM 
+Orders AS ORD
+ORDER BY ShipCountry
+
+SELECT ORD.OrderID, ShipCountry
+FROM 
+Orders AS ORD
+GROUP BY ORD.ShipCountry, ORD.OrderID
+
+SELECT  COUNT(ORD.OrderID) AS 'Pedidos', ShipCountry
+FROM 
+Orders AS ORD
+GROUP BY ORD.ShipCountry
+ORDER BY ShipCountry
+
+
+
+-- 15. Obtener los empldeados y la cantidad de territorios en los que trabaja
+SELECT * FROM Employees
+SELECT * FROM EmployeeTerritories
+
+SELECT CONCAT(EM.FirstName,' ', EM.LastName) AS 'Nombre del empleado' ,
+COUNT(EMTE.TerritoryID) AS 'Territorios en los que trabaja' 
+FROM
+EmployeeTerritories AS EMTE
+INNER JOIN Employees AS EM
+ON EMTE.EmployeeID = EM.EmployeeID
+GROUP BY EM.FirstName, EM.LastName
+
+SELECT CONCAT(EM.FirstName,' ', EM.LastName) AS 'Nombre del empleado' ,
+COUNT(EMTE.TerritoryID) AS 'Territorios en los que trabaja',
+TE.TerritoryDescription
+FROM
+EmployeeTerritories AS EMTE
+INNER JOIN Employees AS EM
+ON EMTE.EmployeeID = EM.EmployeeID
+INNER JOIN Territories AS TE
+ON TE.TerritoryID = EMTE.TerritoryID
+GROUP BY EM.FirstName, EM.LastName, TE.TerritoryDescription
+ORDER BY 'Nombre del empleado', TE.TerritoryDescription DESC
+
+-- 16. Listar las categorias y la cantidad de productos que contienen
+SELECT * FROM Categories
+SELECT * FROM Products
+
+SELECT CAT.CategoryName, COUNT(PRO.ProductID) AS 'Productos totales'
+FROM
+Products AS PRO
+INNER JOIN Categories AS CAT
+ON PRO.CategoryID = CAT.CategoryID
+GROUP BY CAT.CategoryName
+
+-- 17. Obtener la cantidad total de productos vendidos por proveedor
+SELECT * FROM Products
+SELECT * FROM Suppliers
+SELECT * FROM [Order Details]
+SELECT * FROM Orders
+
+SELECT SUP.CompanyName AS 'PROVEDOR',
+SUM(OD.Quantity) AS 'Total de productos vendidos'
+FROM
+Suppliers AS SUP
+INNER JOIN Products AS PRO
+ON PRO.SupplierID = SUP.SupplierID
+INNER JOIN [Order Details] AS OD
+ON OD.ProductID = PRO.ProductID
+GROUP BY SUP.CompanyName
+ORDER BY 2 DESC
+
+-- 18. Obtener la cantidad de pedidos enviados por cada empresa de transporte
+
+
+
+-- Consultas Avanzadas
+-- 19.
