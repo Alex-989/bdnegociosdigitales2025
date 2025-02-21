@@ -1,3 +1,9 @@
+# Inner Joins
+
+![InnerJoin](/Unidad2/img/img_inner_join.png)
+
+```sql
+
 use Northwind
 
 -- Seleccionar todas las categorias y productos
@@ -579,7 +585,7 @@ ON OD.OrderID = ORD.OrderID
 GROUP BY CUS.CompanyName
 HAVING SUM(OD.Quantity * OD.UnitPrice) BETWEEN 500 AND 2000
 
-
+```
 -- Left join, right, full y cross
 
 
