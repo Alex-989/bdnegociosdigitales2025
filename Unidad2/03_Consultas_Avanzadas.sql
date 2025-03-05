@@ -582,5 +582,60 @@ HAVING SUM(OD.Quantity * OD.UnitPrice) BETWEEN 500 AND 2000
 
 -- Left join, right, full y cross
 
+-- Left Join
+
+-- 1. Listar los empleados y los pedidos que han gestionado (incluyendo los empleados que no han 
+-- echo pedidos).
+SELECT * FROM Employees
+SELECT * FROM Orders
+
+SELECT FirstName ,EM.EmployeeID, COUNT(ORD.OrderID) AS 'Ordenes gestionadas'
+FROM
+Employees AS EM
+INNER JOIN Orders AS ORD
+ON EM.EmployeeID = ORD.EmployeeID
+GROUP BY EM.EmployeeID, FirstName
+
+SELECT FirstName ,EM.EmployeeID, COUNT(ORD.OrderID) AS 'Ordenes gestionadas'
+FROM
+Employees AS EM
+LEFT JOIN Orders AS ORD
+ON EM.EmployeeID = ORD.EmployeeID
+GROUP BY EM.EmployeeID, FirstName
+
+-- Listar los productos que no tienen una categoria
+SELECT * FROM Products
+SELECT * FROM Categories
+
+SELECT *
+FROM
+Products
+WHERE CategoryID is NULL
+
+SELECT ProductName, CAT.CategoryName
+FROM
+Categories AS CAT
+LEFT JOIN Products AS PRO
+ON CAT.CategoryID = PRO.CategoryID
+
+SELECT *
+FROM
+Categories AS CAT
+LEFT JOIN Products AS PRO
+ON CAT.CategoryID = PRO.CategoryID
+WHERE ProductName IS NULL
+
+
+-- Practica de utilizacion de LEFT JOIN
+
+-- Seleccionar los datos que se van a utilizar para insertar en la tabla
+-- products_new
+
+-- product_id, productName, Customer, Category, unitPrice, discontinued, inserted_date
+
+
+
 
 -- Consultas Avanzadas
+DELETE Products
+WHERE CategoryID = 9
