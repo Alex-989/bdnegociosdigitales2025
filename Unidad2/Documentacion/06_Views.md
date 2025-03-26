@@ -1,24 +1,32 @@
--- Views (Sirve para encapsular una consulta muy grande)
--- No se puede poner un ORDER BY en las vistas, solo despues de 
--- crearlas
+# Views 
+### - (Sirve para encapsular una consulta muy grande)
+### - No se puede poner un ORDER BY en las vistas, solo despues de crearlas
 
--- Sintaxis
-/*CREATE VIEW nombreVista
+# - Sintaxis
+
+```SQL
+CREATE VIEW nombreVista
 AS
 SELECT columnas
 FROM tabla
 WHERE condicion
-*/
+GO ()
+```
 
--- GO ()
-
--- Eliminar vista
+## Eliminar vista
+```sql
 DROP VIEW VistaClientesLatinos;
+```
 
--- Alterar una VISTA
+## Alterar una VISTA
+```sql
 ALTER VIEW VistaCategoriasTodas
 GO
+```
 
+## Ejemplo creacion de una vista
+
+```sql
 USE Northwind;
 GO
 
@@ -27,14 +35,20 @@ AS
 SELECT CategoryID, CategoryName, [Description],
 Picture FROM Categories;
 GO
+```
 
--- Se ejecuta como una tabla.
+### Se ejecuta como una tabla.
+
+```sql
 SELECT * FROM VistaCategoriasTodas;
 GO
+```
 
+## Ejemplo 2 creación de una vista
 
--- Crear una vista que permita visualizar solamente clientes de 
--- Mexico y Brasil.
+- Crear una vista que permita visualizar solamente clientes de Mexico y Brasil.
+
+```sql
 SELECT * FROM Customers;
 GO
 
@@ -47,24 +61,40 @@ GO
 
 SELECT * FROM VistaClientesLatinos
 GO
+```
 
+## Combinando Create con Alter
 
+```sql
 CREATE OR ALTER VIEW VistaClientesLatinos
 AS
 SELECT *
 FROM Customers
 WHERE Country IN('Mexico','Brazil');
 GO
+```
 
+## Consulta de view con Inner Join
+
+```sql
 SELECT * 
 FROM 
 Orders AS ORD
 INNER JOIN VistaClientesLatinos AS VCL
 ON VCL.CustomerID = ORD.CustomerID
 GO
+```
 
--- Crear una vista que contenga los datos de todas las ordenes, los productos, empleados,
--- categorias y clientes, en la orden calcular el importe
+## Ejemplo 3 creación de una vista
+
+- Crear una vista que contenga los datos de: 
+- Todas las ordenes
+- Los productos 
+- Empleados
+- Categorias y clientes 
+- En la orden calcular el importe
+
+```sql
 CREATE OR ALTER VIEW [dbo].[VistaOrdenesCompra]
 AS
 SELECT ORD.OrderID AS 'Numero Orden',
@@ -94,30 +124,43 @@ GO
 SELECT * FROM dbo.VistaOrdenesCompra
 
 SELECT * FROM [Order Details]
+```
 
---1
+## Creación de una vista en una vista
+
+### Paso 1
+
+```sql
 SELECT CONCAT('$ ' , SUM(Importe)) AS 'Importe total'
 FROM VistaOrdenesCompra
 WHERE YEAR([Fecha de orden]) BETWEEN '1995' AND '1996' 
 GO
+```
 
---2
+## Paso 2
+
+```sql
 SELECT CONCAT('$ ' , SUM(Importe)) AS 'Importe total'
 FROM VistaOrdenesCompra
 WHERE YEAR([Fecha de orden]) BETWEEN '1995' AND '1996' 
 GROUP BY [Nombre del cliente]
 GO
+```
 
---3
+## Paso 3
+
+```sql
 SELECT CONCAT('$ ' , SUM(Importe)) AS 'Importe total'
 FROM VistaOrdenesCompra
 WHERE YEAR([Fecha de orden]) BETWEEN '1995' AND '1996' 
 GROUP BY [Nombre del cliente]
 HAVING COUNT(*)>2;
 GO
+```
 
---4
---VISTA EN UNA VISTA
+## Paso 4
+
+```sql
 CREATE OR ALTER VIEW VISTA_ORDENES_1995_1996
 AS
 SELECT CONCAT('$ ' , SUM(Importe)) AS 'Importe total'
@@ -126,18 +169,28 @@ WHERE YEAR([Fecha de orden]) BETWEEN '1995' AND '1996'
 GROUP BY [Nombre del cliente]
 HAVING COUNT(*)>2;
 GO
+```
 
+## Creación de un SCHEMA
 
--- Primero
+### Primero
+
+```sql
 CREATE SCHEMA rh
+```
 
--- Segundo
+### Segundo
+
+```sql
 CREATE TABLE rh.tablarh(
 id INT PRIMARY KEY,
 nombre NVARCHAR(50)
 )
+```
 
--- Vista horizontal
+## Vista horizontal
+
+```sql
 CREATE OR ALTER VIEW rh.ViewCategoriasproductos
 AS
 SELECT CAT.CategoryID, 
@@ -151,5 +204,6 @@ ON CAT.CategoryID = PRO.CategoryID;
 GO
 
 SELECT * FROM rh.ViewCategoriasproductos
+```
 
 -- Vista Vertical

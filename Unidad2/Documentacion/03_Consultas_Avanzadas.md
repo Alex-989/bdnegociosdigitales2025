@@ -1,9 +1,6 @@
-# Inner Joins
-
-![InnerJoin](/img/img_inner_join.png)
+# Ejercicios de consultas avanzadas
 
 ```sql
-
 use Northwind
 
 -- Seleccionar todas las categorias y productos
@@ -31,10 +28,10 @@ Categories AS C
 INNER JOIN
 Products AS P
 ON C.CategoryID = P.CategoryID;
+```
 
-
--- Seleccionar los productos de las categorias beverages y condiments donde
--- la existencia este entre 18 y 30.
+- Seleccionar los productos de las categorias beverages y condiments donde la existencia este entre 18 y 30.
+```sql
 SELECT *
 FROM
 Products AS P
@@ -65,10 +62,10 @@ JOIN Categories AS CA
 ON P.CategoryID = CA.CategoryID
 WHERE (CA.CategoryName = 'beverages' OR CA.CategoryName = 'condiments')
 AND P.UnitsInStock BETWEEN 18 AND 30
+```
 
-
--- Seleccionar los productos y sus importes realizados de marzo a junio de
--- 1996, mostrando la fecha de la orden, el id del del producto y el importe
+- Seleccionar los productos y sus importes realizados de marzo a junio de 1996, mostrando la fecha de la orden, el id del del producto y el importe
+```sql
 SELECT * FROM Products
 SELECT * FROM Orders
 SELECT * FROM [Order Details]
@@ -82,19 +79,21 @@ Orders AS O
 INNER JOIN [Order Details] AS OD
 ON OD.OrderID = O.OrderID
 WHERE O.OrderDate BETWEEN '1996-01-07' AND '1996-30-10'
+```
 
-
--- Mostrar el importe total de ventas de la consulta anterior.
+- Mostrar el importe total de ventas de la consulta anterior.
+```sql
 SELECT CONCAT('$',' ',SUM(OD.Quantity * OD.UnitPrice)) AS Importe
 FROM
 Orders AS O
 INNER JOIN [Order Details] AS OD
 ON OD.OrderID = O.OrderID
 WHERE O.OrderDate BETWEEN '1996-01-07' AND '1996-30-10'
+```
 
-
--- Consultas basicas con INER JOIN
--- 1. Obtener los nombres de los clientes y los paises a los que enviaron sus pedidos
+## Consultas basicas con INER JOIN
+- 1. Obtener los nombres de los clientes y los paises a los que enviaron sus pedidos.
+```sql
 SELECT ORD.CustomerID, ORD.ShipCountry
 FROM
 Orders AS ORD
@@ -125,9 +124,10 @@ Orders AS ORD
 INNER JOIN Customers AS CUS
 ON CUS.CustomerID = ORD.CustomerID
 ORDER BY 2 DESC
+```
 
-
--- 2. Obtener los productos y sus respectivos proveedores
+- 2. Obtener los productos y sus respectivos proveedores.
+```sql
 SELECT ProductName, SUP.SupplierID
 FROM
 Products AS PRO
@@ -139,15 +139,19 @@ FROM
 Suppliers AS SUP
 INNER JOIN Products AS PRO
 ON PRO.SupplierID = SUP.SupplierID
+```
 
--- 3. Obtener los pedidos y los empleados que los gestionaron
+- 3. Obtener los pedidos y los empleados que los gestionaron.
+```sql
 SELECT *
 FROM
 Orders AS ORD
 INNER JOIN Employees AS EM
 ON ORD.EmployeeID = EM.EmployeeID
+```
 
--- 4. Listar los productos juntos con sus precios y la categoria a la que pertenecen.
+- 4. Listar los productos juntos con sus precios y la categoria a la que pertenecen.
+```sql
 SELECT ProductName, UnitPrice, CategoryID
 FROM
 Products
@@ -158,17 +162,19 @@ Products AS PRO
 INNER JOIN
 Categories AS CAT
 ON CAT.CategoryID = PRO.CategoryID
+```
 
-
--- 5. Obtener el nombre del cliente, el numero de orden y fecha de orden.
+- 5. Obtener el nombre del cliente, el numero de orden y fecha de orden.
+```sql
 SELECT CUS.CompanyName, ORD.OrderID, OrderDate
 FROM
 Orders AS ORD
 INNER JOIN Customers AS CUS
 ON ORD.CustomerID = CUS.CustomerID
+```
 
---6. Listar las ordenes mostrando el numero de orden, el nombre del producto y
--- la cantidad que se vendio.
+- 6. Listar las ordenes mostrando el numero de orden, el nombre del producto y la cantidad que se vendio.
+```sql
 SELECT ORDE.OrderID, PRO.ProductName, ORDE.Quantity
 FROM 
 Products AS PRO
@@ -198,9 +204,10 @@ INNER JOIN Products AS P
 ON OD.ProductID = P.ProductID
 GROUP BY OD.OrderID
 ORDER BY OD.OrderID DESC
+```
 
-
--- 7. Obtener los empleados y sus respectivos jefes
+- 7. Obtener los empleados y sus respectivos jefes.
+```sql
 SELECT CONCAT(E1.FirstName, ' ', E1.LastName) AS [Empleado],
 CONCAT(J1.FirstName, ' ', J1.LastName) AS [Jefe]
 FROM Employees AS E1
@@ -208,8 +215,10 @@ INNER JOIN Employees AS J1
 ON E1.ReportsTo = J1.EmployeeID
 
 SELECT FirstName, ReportsTo FROM Employees
+```
 
--- 8. Listar los pedidos y el nombre de la empresa de transporte utilizada
+- 8. Listar los pedidos y el nombre de la empresa de transporte utilizada.
+```sql
 SELECT * FROM Orders
 SELECT * FROM Shippers
 
@@ -219,12 +228,12 @@ Orders AS ORD
 INNER JOIN Shippers AS SHI
 ON SHI.ShipperID = ORD.ShipVia
 ORDER BY 1 ASC
+```
 
+## Consultas INNER JOIN INTERMEDIAS
 
-
--- Consultas INNER JOIN INTERMEDIAS
-
--- 9. Obtener la cantidad total de productos vendidos por categoria
+- 9. Obtener la cantidad total de productos vendidos por categoria.
+```sql
 SELECT SUM(Quantity) 
 FROM 
 [Order Details]
@@ -238,9 +247,10 @@ INNER JOIN [Order Details] AS OD
 ON OD.ProductID = PRO.ProductID
 GROUP BY CAT.CategoryName
 ORDER BY CAT.CategoryName
+```
 
-
--- 10. Obtener el total de ventas por empleado.
+- 10. Obtener el total de ventas por empleado.
+```sql
 SELECT * FROM Employees
 SELECT * FROM Orders
 SELECT * FROM [Order Details]
@@ -262,9 +272,10 @@ ON O.EmployeeID = E.EmployeeID
 INNER JOIN [Order Details] AS OD
 ON OD.OrderID = O.OrderID
 GROUP BY E.FirstName, E.LastName
+```
 
-
--- 11. Listar los clientes y la cantidad de pedidos que han realizado.
+- 11. Listar los clientes y la cantidad de pedidos que han realizado.
+```sql
 SELECT * FROM Orders -- = 830
 SELECT * FROM Customers -- = 91
 
@@ -291,8 +302,10 @@ INNER JOIN Customers AS CUS
 ON ORD.CustomerID = CUS.CustomerID
 GROUP BY CUS.CompanyName
 ORDER BY COUNT(*)
+```
 
--- 12. Obtener los empldeados que han gestionado pedidos enviados a alemania.
+- 12. Obtener los empldeados que han gestionado pedidos enviados a alemania.
+```sql
 SELECT * FROM Employees
 SELECT * FROM Orders
 
@@ -309,8 +322,10 @@ Orders AS ORD
 INNER JOIN Employees EM
 ON ORD.EmployeeID = EM.EmployeeID
 WHERE ShipCountry = 'Germany'
+```
 
--- 13. Listar los productos junto con el nombre del proveedor y el pais de origen
+- 13. Listar los productos junto con el nombre del proveedor y el pais de origen.
+```sql
 SELECT * FROM Products
 SELECT * FROM Suppliers
 SELECT * FROM Orders
@@ -320,8 +335,10 @@ FROM
 Products AS PRO
 INNER JOIN Suppliers AS SUP
 ON PRO.SupplierID = SUP.SupplierID
+```
 
--- 14. Obtener los pedidos agrupados por pais de envio.
+- 14. Obtener los pedidos agrupados por pais de envio.
+```sql
 SELECT * FROM Orders
 SELECT * FROM Shippers
 
@@ -340,10 +357,10 @@ FROM
 Orders AS ORD
 GROUP BY ORD.ShipCountry
 ORDER BY ShipCountry
+```
 
-
-
--- 15. Obtener los empldeados y la cantidad de territorios en los que trabaja
+- 15. Obtener los empldeados y la cantidad de territorios en los que trabaja.
+```sql
 SELECT * FROM Employees
 SELECT * FROM EmployeeTerritories
 
@@ -366,8 +383,10 @@ INNER JOIN Territories AS TE
 ON TE.TerritoryID = EMTE.TerritoryID
 GROUP BY EM.FirstName, EM.LastName, TE.TerritoryDescription
 ORDER BY 'Nombre del empleado', TE.TerritoryDescription DESC
+```
 
--- 16. Listar las categorias y la cantidad de productos que contienen
+- 16. Listar las categorias y la cantidad de productos que contienen.
+```sql
 SELECT * FROM Categories
 SELECT * FROM Products
 
@@ -377,8 +396,10 @@ Products AS PRO
 INNER JOIN Categories AS CAT
 ON PRO.CategoryID = CAT.CategoryID
 GROUP BY CAT.CategoryName
+```
 
--- 17. Obtener la cantidad total de productos vendidos por proveedor
+- 17. Obtener la cantidad total de productos vendidos por proveedor.
+```sql
 SELECT * FROM Products
 SELECT * FROM Suppliers
 SELECT * FROM [Order Details]
@@ -394,8 +415,10 @@ INNER JOIN [Order Details] AS OD
 ON OD.ProductID = PRO.ProductID
 GROUP BY SUP.CompanyName
 ORDER BY 2 DESC
+```
 
--- 18. Obtener la cantidad de pedidos enviados por cada empresa de transporte
+- 18. Obtener la cantidad de pedidos enviados por cada empresa de transporte.
+```sql
 SELECT SHI.CompanyName AS 'Transportista', COUNT(*) AS 'Total de pedidos'
 FROM 
 Orders AS ORD
@@ -410,8 +433,10 @@ SELECT COUNT(*) FROM Orders
 SELECT COUNT(OrderID) FROM Orders
 
 SELECT COUNT(ShipRegion) FROM Orders
+```
 
--- 19. Obtener los clientes que han realizado pedidos con mas de un producto.
+- 19. Obtener los clientes que han realizado pedidos con mas de un producto.
+```sql
 SELECT CUS.CompanyName, COUNT(ProductID) AS 'Numero de productos'
 FROM
 Customers AS CUS
@@ -440,11 +465,12 @@ INNER JOIN [Order Details] AS OD
 ON OD.OrderID = ORD.OrderID
 GROUP BY CUS.CompanyName
 ORDER BY 2 DESC
+```
 
-
--- 20. Listar los empleados con la cantidad total de pedidos que han gestionado y a que
--- clientes les han vendido, agrupandolos por nombre completo y dentro de este nombre por cliente,
--- ordenandolos por la cantidad de mayor pedidos.
+- 20. Listar los empleados con la cantidad total de pedidos que han gestionado y a que clientes les han vendido, agrupandolos por nombre completo.
+- Y dentro de este nombre por cliente
+- Ordenandolos por la cantidad de mayor pedidos.
+```sql
 SELECT  EM.EmployeeID, COUNT(*) AS 'Numero de pedidos'
 FROM
 Orders AS ORD
@@ -471,9 +497,10 @@ INNER JOIN Customers AS CUS
 ON ORD.CustomerID = CUS.CustomerID
 GROUP BY EM.FirstName, EM.LastName, CUS.CompanyName
 ORDER BY 'Nombre completo' ASC, 'Cliente'
+```
 
-
--- 21. Listar las categorias con el total de ingresos generados por sus productos
+- 21. Listar las categorias con el total de ingresos generados por sus productos.
+```sql
 SELECT * FROM Products
 SELECT * FROM Categories
 SELECT * FROM [Order Details]
@@ -506,9 +533,10 @@ INNER JOIN Categories AS CAT
 ON PRO.CategoryID = CAT.CategoryID
 GROUP BY CAT.CategoryName, PRO.ProductName
 ORDER BY CAT.CategoryName
+```
 
-
--- 22. Listar los clientes con el total ($) gastado por pedidos
+- 22. Listar los clientes con el total ($) gastado por pedidos.
+```sql
 SELECT * FROM Customers
 SELECT * FROM Orders
 SELECT * FROM [Order Details]
@@ -520,9 +548,10 @@ ON ORD.CustomerID = CUS.CustomerID
 INNER JOIN [Order Details] AS OD
 ON OD.OrderID = ORD.OrderID
 GROUP BY CUS.CompanyName
+```
 
--- 23. Listar los pedidos realizados entre 1 de enero de 1997 y el 
--- 30 de junio de 1997 y mostrar el total de dinero.
+- 23. Listar los pedidos realizados entre 1 de enero de 1997 y el 30 de junio de 1997 y mostrar el total de dinero.
+```sql
 SELECT COUNT(*) FROM Orders
 WHERE OrderDate BETWEEN '01-01-1997' AND '30-06-1997'
 
@@ -540,10 +569,10 @@ INNER JOIN [Order Details] AS OD
 ON ORD.OrderID = OD.OrderID
 WHERE OrderDate BETWEEN '01-01-1997' AND '30-06-1997'
 GROUP BY ORD.OrderID, OrderDate
+```
 
-
-
--- 24. Listar los productos con las categorias Beverages, seafood, confections.
+- 24. Listar los productos con las categorias Beverages, seafood, confections.
+```sql
 SELECT * FROM Products
 SELECT * FROM Categories
 
@@ -553,10 +582,10 @@ Products AS PRO
 INNER JOIN Categories AS CAT
 ON PRO.CategoryID = CAT.CategoryID
 WHERE CategoryName IN ('Beverages', 'Seafood', 'Confections')
+```
 
-
--- 25. Listar los clientes ubicados en Alemania y que hayan 
--- realizado pedidos entes del 1 de enero de 1997.
+- 25. Listar los clientes ubicados en Alemania y que hayan realizado pedidos entes del 1 de enero de 1997.
+```sql
 SELECT * FROM Customers
 SELECT * FROM Orders
 
@@ -569,8 +598,10 @@ Orders AS ORD
 INNER JOIN Customers AS CUS
 ON ORD.CustomerID = CUS.CustomerID
 WHERE (CUS.Country = 'Germany') AND OrderDate < '01-01-1997'
+```
 
--- 26. Listar los clientes que han realizado pedidos con un total entre $500 y $2000
+- 26. Listar los clientes que han realizado pedidos con un total entre $500 y $2000.
+```sql
 SELECT * FROM Customers
 SELECT * FROM Orders
 SELECT * FROM [Order Details]
@@ -584,9 +615,63 @@ INNER JOIN [Order Details] AS OD
 ON OD.OrderID = ORD.OrderID
 GROUP BY CUS.CompanyName
 HAVING SUM(OD.Quantity * OD.UnitPrice) BETWEEN 500 AND 2000
-
 ```
--- Left join, right, full y cross
 
+# Left join, right, full y cross
+
+## Left Join
+
+- 1. Listar los empleados y los pedidos que han gestionado (incluyendo los empleados que no han 
+-- echo pedidos).
+```sql
+SELECT * FROM Employees
+SELECT * FROM Orders
+
+SELECT FirstName ,EM.EmployeeID, COUNT(ORD.OrderID) AS 'Ordenes gestionadas'
+FROM
+Employees AS EM
+INNER JOIN Orders AS ORD
+ON EM.EmployeeID = ORD.EmployeeID
+GROUP BY EM.EmployeeID, FirstName
+
+SELECT FirstName ,EM.EmployeeID, COUNT(ORD.OrderID) AS 'Ordenes gestionadas'
+FROM
+Employees AS EM
+LEFT JOIN Orders AS ORD
+ON EM.EmployeeID = ORD.EmployeeID
+GROUP BY EM.EmployeeID, FirstName
+```
+
+- Listar los productos que no tienen una categoria.
+```sql
+SELECT * FROM Products
+SELECT * FROM Categories
+
+SELECT *
+FROM
+Products
+WHERE CategoryID is NULL
+
+SELECT ProductName, CAT.CategoryName
+FROM
+Categories AS CAT
+LEFT JOIN Products AS PRO
+ON CAT.CategoryID = PRO.CategoryID
+
+SELECT *
+FROM
+Categories AS CAT
+LEFT JOIN Products AS PRO
+ON CAT.CategoryID = PRO.CategoryID
+WHERE ProductName IS NULL
+
+### Practica de utilizacion de LEFT JOIN
+
+-- Seleccionar los datos que se van a utilizar para insertar en la tabla products_new
+
+-- product_id, productName, Customer, Category, unitPrice, discontinued, inserted_date
 
 -- Consultas Avanzadas
+DELETE Products
+WHERE CategoryID = 9
+```

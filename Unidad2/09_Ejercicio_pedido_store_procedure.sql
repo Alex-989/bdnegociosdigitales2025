@@ -74,9 +74,9 @@ EXEC spu_Crear_Pedido @numeroPedido = 112961, @cliente = 2117,
 @repre=106, @fab='RFI',
 @Producto = '2A44L', @cantidad=20
 
-EXEC spu_Crear_Pedido @numeroPedido = 113070, @cliente = 2117,
+EXEC spu_Crear_Pedido @numeroPedido = 11308, @cliente = 2117,
 @repre=101, @fab='ACI',
-@Producto = '4100X', @cantidad=20
+@Producto = '4100X', @cantidad=5
 
 
 SELECT * FROM Productos
@@ -85,3 +85,5 @@ GO
 
 
 EXEC spu_Crear_Pedido 
+
+SELECT * FROM Pedidos

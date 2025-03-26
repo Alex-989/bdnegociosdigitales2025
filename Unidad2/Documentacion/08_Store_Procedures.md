@@ -1,20 +1,26 @@
--- Store Procedure
+# Ejercicio de creación y comprensión de Store Procedures
 
--- Crea un store procedure para seleccionar todos los clientes
+### Store Procedure
+
+- Crea un store procedure para seleccionar todos los clientes
+```sql
 CREATE OR ALTER PROCEDURE spu_mostrar_clientes
 AS
 BEGIN
 	SELECT * FROM Customers;
 END
 
-
 -- Ejecutar un store en transact
+
 EXEC spu_mostrar_clientes;
 GO
+```
 
+- Crear un SP que muestre los clientes por pais
 
+```sql
 -- Se ejecuta este primero para que funcione
--- Crear un SP que muestre los clientes por pais
+
 -- Parametros de entrada
 CREATE OR ALTER PROC spu_CustomersPorPais
 -- Parametros
@@ -29,9 +35,11 @@ END;
 EXEC spu_CustomersPorPais 'Germany'
 EXEC spu_CustomersPorPais 'Spain'
 GO
+```
 
+- Crear un SP que muestre los clientes por pais de 2 paises
+```sql
 -- Se ejecuta este para que funcione 
--- Para 2 paises
 CREATE OR ALTER PROC spu_CustomersPorPais
 -- Parametros
 @Pais NVARCHAR(15), -- Parametro de entrada
@@ -51,12 +59,14 @@ DECLARE @P2 NVARCHAR(15) = 'Germany';
 
 EXEC spu_CustomersPorPais @P1, @P2;
 GO
+```
 
+- Generar un reporte que permita visualizar los datos de compra de un determinado cliente
+- En un rango de fechas,
+- Mostrando el monto total de compras por producto,
+- Meediante SP
 
--- Generar un reporte que permita visualizar los datos de compra de un determinado cliente
--- en un rango de fechas,
--- mostrando el monto total de compras por producto,
--- mediante SP
+```sql
 CREATE OR ALTER proc spu_informe_ventas_clientes
 @nombre nvarchar (40) = 'Vins et alcools Chevalier',
 @fechaInicial DateTime,
@@ -73,16 +83,17 @@ end;
 SELECT * FROM dbo.VistaOrdenesCompra
 select * from Customers
 
---Ejecucion de un store procedure con parametros  de Entrada
 
+-- Ejecucion de un store procedure con parametros  de Entrada
 exec spu_informe_ventas_clientes 'Vins et alcools Chevalier', 
 								 '1996-01-01', '1997-01-01'
 
---Ejecucion de un store procedure con parametros en diferente posicion
 
+--Ejecucion de un store procedure con parametros en diferente posicion
 exec spu_informe_ventas_clientes @fechaFinal = '1997-01-01',
 								 @nombre ='Vins et alcools Chevalier',
 								 @fechaInicial = '1996-01-01'
+
 
 -- Ejecucion de un store procedure con parametros de entrada con un campo
 -- que tiene un valor por default
@@ -91,10 +102,11 @@ exec spu_informe_ventas_clientes
 								 @fechaFinal = '1997-01-01'
 
 GO
+```
 
+- Crear un Store Preocedure que permita insertar un cliene
 
--- Crear un Store Preocedure que permita insertar un cliene
-
+```sql
 CREATE OR ALTER procedure spu_agregar_cliente
 	@id nchar(5),
 	@nombre nvarchar(40),
@@ -115,13 +127,17 @@ end;
 go
 
 
--- STORE PROCEDURE CON TRY CATCH
+-- Execucion del store
 SELECT * FROM Customers
 exec spu_agregar_cliente 'ALFKI', 'Patito de hule'
 exec spu_agregar_cliente 'ALFKC', 'Patito de hule'
 exec spu_agregar_cliente 'ALFKF', 'Patito de hule2'
 GO
+```
 
+- Creacion de un SP con Try Catch
+
+```sql
 CREATE OR ALTER PROCEDURE spu_agregar_cliente_try_catch
 	@id nchar(5),
 	@nombre nvarchar(40),
@@ -153,15 +169,15 @@ GO
 exec spu_agregar_cliente 'ALFKS', 'Muñeca vieja 7', @city = 'San Miguel'
 GO
 
-
-
 SELECT * FROM Customers
 GO
+```
 
--- Manejo de ciclos con STORE PROCEDURES
+### Manejo de ciclos con STORE PROCEDURES
 
--- Imprimir el numero de veces que indique el usuario
+- Imprimir el numero de veces que indique el usuario
 
+```sql
 CREATE OR ALTER PROCEDURE spu_imprimir
 	@numero int
 	AS
@@ -184,3 +200,4 @@ GO
 
 EXEC spu_imprimir @numero = 10;
 EXEC spu_imprimir @numero = -5;
+```

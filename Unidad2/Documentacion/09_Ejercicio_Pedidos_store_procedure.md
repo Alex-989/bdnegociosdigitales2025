@@ -78,7 +78,6 @@ EXEC spu_Crear_Pedido @numeroPedido = 113070, @cliente = 2117,
 @repre=101, @fab='ACI',
 @Producto = '4100X', @cantidad=20
 
-
 SELECT * FROM Productos
 WHERE Id_fab = 'ACI' AND Id_producto = '4100X'
 GO
