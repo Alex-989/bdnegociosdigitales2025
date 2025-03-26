@@ -1,6 +1,6 @@
 # Inner Joins
 
-![InnerJoin](/img/img_inner_join.png)
+![InnerJoin](../img/img_inner_join.png)
 
 ```sql
 
