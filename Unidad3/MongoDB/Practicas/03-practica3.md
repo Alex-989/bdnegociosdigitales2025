@@ -57,7 +57,8 @@ db.cursos.replaceOne(
 "ventas": 0,
 "salario": 0,
 "departamentos": "Este empleado ha sido anulado"
-}```
+}
+```
 
 
 5. Con un find comprobar que el empleado ha sido modificado

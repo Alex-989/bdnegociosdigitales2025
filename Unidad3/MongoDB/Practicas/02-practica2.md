@@ -1,10 +1,42 @@
 # Consultas
 
 1. Cargar el archivo empleados.json
+```json
+db.cursos.insertMany([
+	{
+		"nombre": "Gregory",
+		"apellidos": "Juarez",
+		"correo": "nisi.mauris.nulla@google.edu",
+		"direccion": "2727 Nec, St.",
+		"region": "Mizoram",
+		"pais": "Norway",
+		"empresa": "Google",
+		"ventas": 26890,
+		"salario": 3265,
+		"departamentos": "Legal Department, Accounting, Media Relations, Research and Development"
+	},
+	{
+		"nombre": "Candace",
+		"apellidos": "Buck",
+		"correo": "donec.dignissim@google.ca",
+		"direccion": "Ap #559-7631 Donec Road",
+		"region": "Møre og Romsdal",
+		"pais": "India",
+		"empresa": "Google",
+		"ventas": 1023,
+		"salario": 6657,
+		"departamentos": "Asset Management, Sales and Marketing, Media Relations"
+	},
 
+    ........Base de datos restante
+]
+)
+```
 
 2. Utilizar la base de datos curso
-
+```json
+use curso
+```
 
 3. Buscar todos los empleados que trabajen en google
 ```json
@@ -71,7 +103,7 @@ db.cursos.find(
        {
         $and:[
             {$or: [{empresa: 'Yahoo'}, {salario:{$gt:6000}}]},
-            { $or: [{empresa:'Google'}, {salario:{$lt:20000}}]}
+            {$or: [{empresa:'Google'}, {salario:{$lt:20000}}]}
         ]
        }
 

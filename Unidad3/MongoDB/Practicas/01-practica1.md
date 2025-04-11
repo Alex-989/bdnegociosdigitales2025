@@ -9,11 +9,16 @@ use curso
 ````
 1. Comprobar que la base de datos no existe
 ```json
+exit
+
+PS C:\Users\yoloy> mongosh
+
 show databases
 ```
 1. Crear una coleccion que se llame facturas y mostrarla
 ``` json
  db.createCollection('facturas')
+ 
  show collections
 ```
 
