@@ -1,7 +1,9 @@
 # Practica 1: Base de Datos, colecciones e inserts
 
 1. Conectarnos con mongosh a MongoDB
+```json
 PS C:\Users\yoloy> mongosh
+```
 
 1. Crear una base de datos llamada curso
 ````json
